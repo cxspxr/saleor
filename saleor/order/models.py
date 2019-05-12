@@ -60,6 +60,7 @@ class OrderQueryset(models.QuerySet):
 
 
 class Order(models.Model):
+    secret_token = models.CharField(max_length=32, null=True)
     created = models.DateTimeField(default=now, editable=False)
     status = models.CharField(
         max_length=32, default=OrderStatus.UNFULFILLED, choices=OrderStatus.CHOICES

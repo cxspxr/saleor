@@ -19,6 +19,7 @@ from .order.urls import urlpatterns as order_urls
 from .page.urls import urlpatterns as page_urls
 from .product.urls import urlpatterns as product_urls
 from .search.urls import urlpatterns as search_urls
+from .fullfill.urls import urlpatterns as fullfill_urls
 
 handler404 = "saleor.core.views.handle_404"
 
@@ -31,6 +32,7 @@ non_translatable_urlpatterns = [
         {"sitemaps": sitemaps},
         name="django.contrib.sitemaps.views.sitemap",
     ),
+    url(r"^fullfill/", include((fullfill_urls, "fullfill"), namespace="fullfill")),
     url(r"^i18n/$", set_language, name="set_language"),
     url("", include("social_django.urls", namespace="social")),
 ]
