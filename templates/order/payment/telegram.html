@@ -1,0 +1,21 @@
+{% extends "order/payment/details.html" %}
+{% load i18n %}
+
+{% block forms %}
+  <form method="POST" id="payment-form" {% if form.action %} action="{{ form.action }}"{% endif %} novalidate>
+    {% csrf_token %}
+    {{ form.media }}
+    {{ form }}
+    <p>You can use telegram bot <a target="_blank" href="https://t.me/thecommercebot">@thecommercebot</a> and follow the instructions. Try to say "hi" with <b class="text-info">/start</b> command.</p>
+    <p><b class="text-danger">IMPORTANT!</b> your order id is <b class="text-info">{{ form.order_id }}</b></p>
+    <p>You should provide it to the telegram bot linked above.</p>
+    {% if form.errors %}
+      <a class="btn" href="{% url "order:details" token=payment.order.token %}">
+        {% trans "Change payment" context "Payment form (Telegram) secondary action" %}
+      </a>  
+    {% endif %}
+      <button type="submit" class="btn btn-primary">
+        {% trans "Make payment" context "Payment form primary action" %}
+      </button>
+  </form>
+{% endblock forms %}

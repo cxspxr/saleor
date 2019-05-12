@@ -570,14 +570,17 @@ DUMMY = "dummy"
 BRAINTREE = "braintree"
 RAZORPAY = "razorpay"
 STRIPE = "stripe"
+TELEGRAM = "telegram"
 
 CHECKOUT_PAYMENT_GATEWAYS = {
     DUMMY: pgettext_lazy("Payment method name", "Dummy gateway"),
-    STRIPE: pgettext_lazy("Payment method name", "Stripe")
+    STRIPE: pgettext_lazy("Payment method name", "Stripe"),
+    TELEGRAM: pgettext_lazy("Payment method name", "Telegram"),
 }
 
 PAYMENT_GATEWAYS = {
     DUMMY: {"module": "saleor.payment.gateways.dummy", "connection_params": {}},
+    TELEGRAM: {"module": "saleor.payment.gateways.telegram", "connection_params": {}},
     BRAINTREE: {
         "module": "saleor.payment.gateways.braintree",
         "connection_params": {
