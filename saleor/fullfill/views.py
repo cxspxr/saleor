@@ -32,8 +32,8 @@ def fullfill(request, order_id):
 def getInfo(request, order_id):
     requester_ip = get_client_ip(request)
 
-    # if not requester_ip == '127.0.0.1' and not requester_ip == '80.211.72.95':
-    #     raise Http404
+    if not requester_ip == '127.0.0.1' and not requester_ip == '80.211.72.95':
+        raise Http404
 
 
     if not order_id:
@@ -44,8 +44,8 @@ def getInfo(request, order_id):
     if not order:
         raise Http404
 
-    # if order.is_fully_paid:
-    #     raise Http404
+    if order.is_fully_paid:
+        raise Http404
 
 
-    return JsonResponse({'amount': order.total.gross.amount, 'currency': order.total.gross.currency, 'ip': requester_ip});
+    return JsonResponse({'amount': order.total.gross.amount, 'currency': order.total.gross.currency});
