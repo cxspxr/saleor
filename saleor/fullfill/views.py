@@ -24,8 +24,8 @@ def fullfill(request, order_id):
 def getInfo(request, order_id):
     requester_ip = request.META['REMOTE_ADDR']
 
-    if not requester_ip == '127.0.0.1' and not requester_ip == '80.211.72.95':
-        raise Http404
+    # if not requester_ip == '127.0.0.1' and not requester_ip == '80.211.72.95':
+    #     raise Http404
 
 
     if not order_id:
@@ -40,4 +40,4 @@ def getInfo(request, order_id):
     #     raise Http404
 
 
-    return JsonResponse({'amount': order.total.gross.amount, 'currency': order.total.gross.currency});
+    return JsonResponse({'amount': order.total.gross.amount, 'currency': order.total.gross.currency, ip: requester_ip});
