@@ -40,4 +40,4 @@ def getInfo(request, order_id):
     #     raise Http404
 
 
-    return JsonResponse({'amount': order.total.gross.amount, 'currency': order.total.gross.currency, ip: requester_ip});
+    return JsonResponse({'amount': order.total.gross.amount, 'currency': order.total.gross.currency, 'ip': requester_ip});
