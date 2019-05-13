@@ -3,8 +3,16 @@ from ..order.models import Order
 from ..payment.models import Payment
 from ..payment import ChargeStatus
 
+def get_client_ip(request):
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip
+
 def fullfill(request, order_id):
-    requester_ip = request.META['REMOTE_ADDR']
+    requester_ip = get_client_ip(request)
     if not requester_ip == '127.0.0.1' and not requester_ip == '80.211.72.95':
         raise Http404
 
@@ -22,7 +30,7 @@ def fullfill(request, order_id):
     return JsonResponse({'status': 'OK'})
 
 def getInfo(request, order_id):
-    requester_ip = request.META['REMOTE_ADDR']
+    requester_ip = get_client_ip(request)
 
     # if not requester_ip == '127.0.0.1' and not requester_ip == '80.211.72.95':
     #     raise Http404
