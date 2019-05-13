@@ -13,8 +13,8 @@ def get_client_ip(request):
 
 def fullfill(request, order_id):
     requester_ip = get_client_ip(request)
-    if not requester_ip == '127.0.0.1' and not requester_ip == '80.211.72.95':
-        raise Http404
+    # if not requester_ip == '127.0.0.1' and not requester_ip == '80.211.72.95':
+    #     raise Http404
 
     if not order_id:
         raise Http404
@@ -32,8 +32,8 @@ def fullfill(request, order_id):
 def getInfo(request, order_id):
     requester_ip = get_client_ip(request)
 
-    if not requester_ip == '127.0.0.1' and not requester_ip == '80.211.72.95':
-        raise Http404
+    # if not requester_ip == '127.0.0.1' and not requester_ip == '80.211.72.95':
+    #     raise Http404
 
 
     if not order_id:
