@@ -17,14 +17,16 @@ def fullfill(request, order_id):
     #     raise Http404
 
     if not order_id:
-        raise Http404
+        return JsonResponse({ 'status': 'MISSING' })
 
     order = Order.objects.get(id=order_id)
-    if order.is_fully_paid:
-        raise Http404
 
     if not order:
-        raise Http404
+        return JsonResponse({ 'status': 'NO' })
+
+    if order.is_fully_paid:
+        return JsonResponse({ 'status': 'ALREADY' })
+
 
     order.payments.create(charge_status=ChargeStatus.FULLY_CHARGED, total=order.total.gross.amount)
     return JsonResponse({'status': 'OK'})
@@ -37,15 +39,15 @@ def getInfo(request, order_id):
 
 
     if not order_id:
-        raise Http404
+        return JsonResponse({ 'status': 'MISSING' })
 
     order = Order.objects.get(id=order_id)
 
     if not order:
-        raise Http404
+        return JsonResponse({ 'status': 'NO' })
 
     if order.is_fully_paid:
-        raise Http404
+        return JsonResponse({ 'status': 'ALREADY' })
 
 
-    return JsonResponse({'amount': order.total.gross.amount, 'currency': order.total.gross.currency});
+    return JsonResponse({'amount': order.total.gross.amount, 'currency': order.total.gross.currency, 'status': 'OK'});
