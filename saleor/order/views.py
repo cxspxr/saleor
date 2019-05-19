@@ -23,6 +23,7 @@ from . import FulfillmentStatus
 from .forms import CustomerNoteForm, PasswordForm, PaymentDeleteForm, PaymentsForm
 from .models import Order
 from .utils import attach_order_to_user, check_order_status
+from ..product.models import Product
 
 logger = logging.getLogger(__name__)
 

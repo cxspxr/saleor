@@ -27,5 +27,16 @@ urlpatterns = [
         r"^collection/(?P<slug>[a-z0-9-_/]+?)-(?P<pk>[0-9]+)/$",
         views.collection_index,
         name="collection",
+    ),  
+    url(
+        r"^new_items/(\d+)$", views.new_items, name="new_items"
+    ),
+
+    url(
+        r"^price_under/(\d+)/(\d+)$", views.price_under, name="price_under"
+    ),
+
+    url(
+        r"^category_items/(\w+)/(\d+)$", views.category_items, name="category_items"
     ),
 ]

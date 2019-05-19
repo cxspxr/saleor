@@ -13,12 +13,13 @@ from django.http import (
 from django.shortcuts import get_object_or_404, redirect
 from django.template.response import TemplateResponse
 from django.urls import reverse
+from django.core import serializers
 
 from ..checkout.utils import set_checkout_cookie
 from ..core.utils import serialize_decimal
 from ..seo.schema.product import product_json_ld
 from .filters import ProductCategoryFilter, ProductCollectionFilter
-from .models import Category, DigitalContentUrl
+from .models import Category, DigitalContentUrl, Product
 from .utils import (
     collections_visible_to_user,
     get_product_images,
@@ -123,6 +124,29 @@ def digital_product(request, token: str) -> Union[FileResponse, HttpResponseNotF
     content_url.download_num += 1
     content_url.save(update_fields=["download_num"])
     return response
+
+
+def new_items(request, quantity):
+    products = Product.objects.all().order_by('-id')[:int(quantity)]
+    json = serializers.serialize('json', products)
+
+    return JsonResponse({'products': json}); 
+
+def price_under(request, amount, quantity):
+    products = Product.objects.filter(price__lte=int(amount)).order_by('price')[:int(quantity)]
+    json = serializers.serialize('json', products)
+
+    return JsonResponse({'products': json}); 
+
+
+def category_items(request, category, quantity):
+    print(category)
+    product = Category.objects.all()
+    print(product)
+    products = Product.objects.filter(category__name__iexact=category)[:int(quantity)]
+    json = serializers.serialize('json', products)
+
+    return JsonResponse({'products': json}); 
 
 
 def product_add_to_checkout(request, slug, product_id):
